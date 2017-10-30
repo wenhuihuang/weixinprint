@@ -1,0 +1,81 @@
+.clearfix:after {
+  display: block;
+  content: "";
+  clear: both;
+  visibility: hidden;
+}
+
+.top-info {
+  position: relative;
+  width: 100%;
+}
+.top-info .bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+.top-info .top-tips {
+  width: 100%;
+  height: 0.32667rem;
+  background: url(../images/free_top_tips.png) no-repeat top center;
+  background-size: 100%;
+}
+
+.user-info {
+  padding: .15rem 0;
+}
+
+.head {
+  width: 0.65333rem;
+  height: 0.65333rem;
+  background: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  padding: .02rem;
+  box-shadow: 2px 0px 5px 0px #9c9798;
+}
+.head img {
+  display: block;
+  width: 100%;
+}
+
+.user-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.top-content {
+  padding: 0 .2rem;
+  display: flex;
+}
+.top-content .left-content {
+  flex: 1.0;
+}
+.top-content .left-content .bottom-tips {
+  max-width: 2.38rem;
+  height: 0.3675rem;
+  margin: auto;
+  background: url("../images/user_info_bottom_text.png") no-repeat center center;
+  background-size: 100%;
+}
+.top-content .right-content {
+  width: 100px;
+  display: block;
+}
+.top-content .right-content .min-logo {
+  max-width: 0.5075rem;
+  height: 0.5075rem;
+  margin: auto;
+  background: url("../images/min_logo.png") no-repeat center center;
+  background-size: 100%;
+}
+.top-content .right-content .pay-print-btn {
+  display: block;
+  max-width: 1.09083rem;
+  height: 0.32667rem;
+  margin: auto;
+  background: url("../images/pay_print_btn.png") no-repeat center center;
+  background-size: 100%;
+}

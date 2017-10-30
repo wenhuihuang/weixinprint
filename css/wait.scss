@@ -1,0 +1,60 @@
+@import 'common';
+body{
+    background: url(../images/print_bg.png) top center fixed;
+    background-size: 100%;
+    min-height: 100%;
+}
+.ad-list{
+    padding: .2rem .22rem 0 .22rem;
+}
+.ad-list img{
+    display: block;
+    margin:auto;
+    width:100%;
+    margin-bottom:pxtorem(114);
+}
+.print-btn{
+    //width:1.77rem;
+    width:pxtorem(315);
+    height:pxtorem(66);
+    display: block;
+    margin:auto;
+    background:url(../images/print_btn.png) no-repeat center center;
+    background-size: 100%;
+    margin-bottom:pxtorem(160);
+    box-shadow: 0px 4px 12px 1px #d4c5c9;
+    border-radius: .3rem;
+}
+.arrows{
+    width:pxtorem(61);
+    height:pxtorem(44);
+    margin:auto;
+    background: url(../images/arrows_down_icon.png) no-repeat center center;
+    background-size:100%;
+    margin-bottom:pxtorem(22);
+}
+.tips-text{
+    width:pxtorem(358);
+    height:pxtorem(71);
+    margin: auto;
+    background: url(../images/print_tips_text.png) no-repeat center center;
+    background-size: 100%;
+    margin-bottom:pxtorem(50);
+}
+.line{
+    width:pxtorem(454);
+    height:pxtorem(3);
+    margin:auto;
+    background:url(../images/line_bg.png) no-repeat center center;
+    background-size: 100%;
+    margin-bottom:pxtorem(30)
+}
+.issue{
+    text-align:center;
+    margin-bottom: pxtorem(50)
+}
+.issue a{
+    font-size:.14rem;
+    color:#fa5f80;
+    text-decoration: none;
+}

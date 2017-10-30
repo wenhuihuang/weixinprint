@@ -1,0 +1,60 @@
+@import 'common';
+.top-info{
+    position: relative;
+    width:100%;
+    .bg{
+        position: absolute;
+        width: 100%;
+        height:100%;
+        z-index: -2;
+    }
+  
+    .top-tips{
+        width:100%;
+        height:pxtorem(56);
+        background:url(../images/free_top_tips.png) no-repeat top center;
+        background-size: 100%;
+    }
+}
+.user-info{
+    padding:.15rem 0;
+}
+.head{
+    width:pxtorem(112);
+    height:pxtorem(112);
+    background:#fff;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    padding:.02rem;
+    box-shadow: 2px 0px 5px 0px #9c9798;
+    img{
+        display: block;
+        width:100%;
+    }
+}
+.user-name{
+    display: inline-block;
+    vertical-align: middle;
+}
+.top-content{
+    padding:0 .2rem;
+    display: flex;
+    .left-content{
+        flex: 1.0;
+        .bottom-tips{
+            @include setBg(408,63,'../images/user_info_bottom_text.png');
+        }
+    }
+    .right-content{
+        width:100px;
+        display: block;
+        .min-logo{
+            @include setBg(87,87,'../images/min_logo.png');
+        }
+        .pay-print-btn{
+            display:block;
+            @include setBg(187,56,'../images/pay_print_btn.png');
+        }
+    }
+}
