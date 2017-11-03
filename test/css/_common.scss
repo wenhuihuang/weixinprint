@@ -1,0 +1,18 @@
+@function pxtorem($px){ //因为设计稿扩大了14/24倍 所以要缩小;传入的是设计稿的的尺寸 ;返回转换后以rem为单位的尺寸
+    @return $px * (14/24) * 0.01 * 1rem;
+}
+@mixin setBg($w,$h,$url){
+    max-width:pxtorem($w);
+    height:pxtorem($h);
+    margin: auto;
+    background: url($url) no-repeat center center;
+    background-size: 100%;
+}
+.clearfix{
+    &:after{
+        display: block;
+        content:"";
+        clear: both;
+        visibility: hidden;
+    }
+}

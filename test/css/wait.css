@@ -47,19 +47,9 @@ body {
   width: 2.08833rem;
   height: 0.41417rem;
   margin: auto;
+  background: url(../images/print_tips_text.png) no-repeat center center;
   background-size: 100%;
   margin-bottom: 0.29167rem;
-}
-.tips-text .b {
-  font-size: .16rem;
-  color: #3d3d3d;
-  text-align: center;
-  margin-bottom: .1rem;
-}
-.tips-text .s {
-  font-size: .14rem;
-  color: #6d6d6d;
-  text-align: center;
 }
 
 .line {

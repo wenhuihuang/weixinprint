@@ -37,20 +37,9 @@ body{
     width:pxtorem(358);
     height:pxtorem(71);
     margin: auto;
-    // background: url(../images/print_tips_text.png) no-repeat center center;
+    background: url(../images/print_tips_text.png) no-repeat center center;
     background-size: 100%;
     margin-bottom:pxtorem(50);
-    .b{
-        font-size:.16rem;
-        color:#3d3d3d;
-        text-align:center;
-        margin-bottom:.1rem;
-    }
-    .s{
-        font-size: .14rem;
-        color:#6d6d6d;
-        text-align:center;
-    }
 }
 .line{
     width:pxtorem(454);
