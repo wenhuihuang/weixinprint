@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name=renderer content=webkit>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="./css/print.css?v=1">
+    <title>打印照片</title>
+</head>
+
+<body>
+    <!--加载资源-->
+    <div class="lazy_tip" id="lazy_tip">
+        <span>1%</span>
+        <br> 加载中......
+    </div>
+    <div class="lazy_cover"></div>
+    <div class="resource_lazy hide"></div>
+
+    <div class="pic_edit">
+
+        <div id="clipArea"></div>
+        <!-- 广告区域 -->
+        <img src="photo/images/ad/ad_1.jpg" alt="" class="ad-img">
+        <!-- 广告区域结束 -->
+        <div class="frame-type">
+            <div class="top-tips">
+                <span>点击</span>
+                <span class="min-add-icon"></span>
+                <span>上传照片，图片可以旋转缩放，调整后点击</span>
+                <span class="min-yes-icon"></span>
+            </div>
+            <div class="type-item">
+                <div class="type-item-inner">
+                    <div class="item">
+                        <img src="photo/images/type_blank.png" alt="" class="frame-icon">
+                        <span class="text">广告</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/images/type_blank.png" alt="" class="frame-icon">
+                        <span class="text">文字</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/1.png" data-src="photo/frame/1.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/2.png" data-src="photo/frame/2.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/3.png" data-src="photo/frame/3.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/4.png" data-src="photo/frame/4.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/5.png" data-src="photo/frame/5.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/6.png" data-src="photo/frame/6.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/7.png" data-src="photo/frame/7.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/8.png" data-src="photo/frame/8.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/9.png" data-src="photo/frame/9.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/10.png" data-src="photo/frame/10.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/11.png" data-src="photo/frame/11.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                    <div class="item">
+                        <img src="photo/frame/min/12.png" data-src="photo/frame/12.png" alt="" class="frame-icon">
+                        <span class="text">照片</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="left-info">
+                <span class="address-icon"></span>
+                <span>机台号：</span>
+                <span>323</span>
+            </div>
+            <a href="javascript:;" class="right-btn" id="clipBtn">
+                <span class="min-yes-icon"></span>
+                <span>提交</span>
+            </a>
+        </div>
+        <!-- <button id="upload2">选择图片</button>
+        <button id="clipBtn">上传图片</button> -->
+
+        <input type="file" id="file" style="opacity: 0;position: fixed;bottom: -100px">
+    </div>
+    <img src="" title="upload.jpg" fileName="" id="hit" style="display:none;z-index: 9">
+    <canvas id="canvas1"></canvas>
+    <script src="./photo/js/jquery-2.1.0.min.js"></script>
+    <script src="./photo/js/compressImg/lrz.bundle.js"></script>
+    <script src="./photo/js/sonic.js"></script>
+    <script src="./photo/js/comm.js"></script>
+    <script src="./photo/js/hammer.js"></script>
+    <script src="./photo/js/iscroll-zoom.js"></script>
+    <script src="./photo/js/jquery.photoClip.js?v=1"></script>
+    <script>
+        //判断是不是手机端
+        var is_mobile = !!navigator.userAgent.match(/mobile/i);
+
+        var hammer = '';
+        var currentIndex = 0;
+        var body_width = $('body').width();
+        var body_height = $('body').height();
+
+        $("#clipArea").photoClip({
+            width: body_width * 0.8125,
+            height: body_width * 0.8125,
+            file: "#file",
+            view: "#hit",
+            ok: "#clipBtn",
+            loadStart: function () {
+                //console.log("照片读取中");
+                $('.lazy_tip span').text('');
+                $('.lazy_cover,.lazy_tip').show();
+            },
+            loadComplete: function () {
+                //console.log("照片读取完成");
+                $('.lazy_cover,.lazy_tip').hide();
+            },
+            clipFinish: function (dataURL) {
+                $('#hit').attr('src', dataURL);
+                drawImageFrame(dataURL, 'get');
+                //saveImageInfo();
+            }
+        });
+
+        $('.ad-img').css('width', body_width * 0.8125)
+
+        //图片上传
+        function saveImageInfo() {
+            var filename = $('#hit').attr('fileName');
+            var img_data = $('#hit').attr('src');
+
+            $.post("这里填写图片获取的网址", { image: img_data }, function (data) {
+                if (data != '') {
+                    //			console.info(data);
+                    //data 为返回文件名；
+                    alert('提交成功');
+                }
+            });
+        }
+
+        /*获取文件拓展名*/
+        function getFileExt(str) {
+            var d = /\.[^\.]+$/.exec(str);
+            return d;
+        }
+
+        //图片上传结束
+        $(function () {
+            $('#upload2').on('touchstart', function () {
+                //图片上传按钮
+                $('#file').click();
+            })
+            $('#upload2').on('click', function () {
+                //图片上传按钮
+                $('#file').click();
+            })
+        })
+
+    </script>
+    <script>
+        var base64 = "";
+        function drawImageFrame(result, type, printCode) {
+            //$('#canvas1').show();
+            // $('#uploading').show();
+            var canvas = document.getElementById('canvas1');
+            var ctx = canvas.getContext("2d");
+            var hit = $('#hit')//生成的图片
+            var canvasWidth = $('body').width() * 0.8125
+            var canvasHeight = $('body').height() * 0.8125
+            alert(canvasWidth + "=" + canvasHeight)
+            canvas.width = canvasWidth;
+            canvas.height = canvasHeight;
+            var img = new Image();
+            img.width = canvasWidth;
+            img.height = canvasHeight;
+            img.src = result;
+            img.onload = function () {
+                ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);//相片
+                //相框
+                var frameBg = 'photo/frame/3.png' //$('.frame-bg').attr('url'); 
+                if (frameBg != '' && frameBg != null && frameBg != undefined) {
+                    var frame = new Image();
+                    frame.width = canvasWidth;
+                    frame.height = canvasHeight;
+                    console.log(frameBg)
+                    frame.src = frameBg;//相框路径
+                    frame.onload = function () {
+                        if (type == 'upload') {
+                            ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);//相片
+                            base64 = canvas.toDataURL();
+                            lrz(base64)
+                                .then(function (rst) {
+                                    // 处理成功会执行
+                                    base64 = rst.base64.split(",")[1];
+                                    $('#canvas1').hide();
+                                    //console.log(base64)
+                                    uploadImageToServer(base64, printCode);
+                                })
+                                .catch(function (err) {
+                                    // 处理失败会执行
+                                    alert("压缩图片失败,请重试,提示:" + err);
+                                    $('#uploading').hide();
+                                })
+                        } else if (type == 'get') {
+                            alert('get')
+                            ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);//相片
+                            $("#test").attr("src", canvas.toDataURL())
+                            //$('#getCroppedCanvasModal').modal().find('.modal-body').html(canvas);
+                            // $('#uploading').hide();
+                        }
+                    }
+                } else {
+                    if (type == 'upload') {
+                        base64 = canvas.toDataURL();
+                        lrz(base64)
+                            .then(function (rst) {
+                                // 处理成功会执行
+                                base64 = rst.base64.split(",")[1];
+                                $('#canvas1').hide();
+                                //console.log(base64)
+                                uploadImageToServer(base64, printCode);
+                            })
+                            .catch(function (err) {
+                                // 处理失败会执行
+                                alert("压缩图片失败,请重试,提示:" + err);
+                                $('#uploading').hide();
+                            })
+                    } else if (type == 'get') {
+                        $("#test").attr("src", canvas.toDataURL())
+                    }
+                }
+            }
+        }
+
+        $(function () {
+            var $clip_view = $('.photo-clip-view');
+            var $clear;
+            /*自定义扩展图片裁剪*/
+            //添加相框显示
+            $('<dv class="frame-bg"></div>').css({
+                "position": "absolute",
+                "left": "0",
+                "top": "0",
+                "right": "0",
+                "bottom": "0",
+                "z-index": "1",
+                "pointer-events": "none",
+                "background": 'url("photo/frame/3.png") center center / 100% 100% no-repeat'
+            }).appendTo($clip_view);
+            $clear = $('<i class="clear-img"></i>').appendTo($('#clipArea'));
+            /*自定义扩展图片裁剪结束*/
+
+            /*计算相片裁剪西区域大小*/
+            $("#clipArea").css({
+                "min-height": $clip_view.height()
+            })
+
+            $clear.css({
+                "right": $clip_view.offset().left - 13
+            }).click(function () {
+                console.log($('#file').val())
+                $('#file').val("");
+                $('.photo-clip-rotateLayer img').remove();
+                console.log($('#file').val())
+            })
+            //点击添加图片事件
+            if (is_mobile) {
+                $clip_view.on('touchstart', function () {
+                    var file = $('#file');
+                    if (!$.trim(file.val())) {
+                        $('#file').click();
+                    }
+                })
+            } else {
+                $clip_view.on('click', function () {
+                    var file = $('#file');
+                    if (!$.trim(file.val())) {
+                        $('#file').click();
+                    }
+                })
+            }
+            //计算相框宽度
+            var $frame_item = $('.item'),
+                $frame_item_size = $frame_item.length;
+            $frame_item_width = $frame_item.width(),
+                $frame_item_margin_right = parseInt($frame_item.css("margin-right"));
+
+            $('.type-item-inner').css({ 'width': $frame_item_size * ($frame_item_width + $frame_item_margin_right) })
+
+            //切换背景
+            $('.item').on('click',function(){
+                var src = $(this).find("img").data("src");
+                $('.frame-bg').css({"background":'url("'+src+'") center center / 100% 100% no-repeat'})
+                alert(src)
+            })
+
+            //提交图片
+            $('#clipBtn').on('click',function(){
+
+            })
+
+        })
+    </script>
+    <div id="cover"></div>
+</body>
+
+</html>

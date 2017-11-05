@@ -16,7 +16,7 @@
 	"options": {
 
 		// Output style. Can be nested (default), compact, compressed, or expanded.
-		"outputStyle": "expanded",
+		"outputStyle": "compressed",
 
 		// Emit comments in the generated CSS indicating the corresponding source line.
 		"lineComments": false,
