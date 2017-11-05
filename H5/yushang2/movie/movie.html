@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>誉上电影资讯</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/indexstyle.css" rel="stylesheet">
+</head>
+<body>
+<div id="loadingpart"><div class="text-center"><img src="img/load3.gif"><h3 class="text-center">读取中……</h3></div></div>
+<div class="container-fluid">
+    <div class="navbar-fixed-top row text-center" id="topnav">
+        <div id="topbtn1" class="col-xs-6 topmenu topactive">正在热映</div>
+        <div id="topbtn2" class="col-xs-6 topmenu">即将上映</div>
+    </div>
+
+    <div class=" row " id="backnav" hidden="hidden">
+    <div  class="col-xs-12 topmenu "><span class="glyphicon glyphicon-chevron-left" aria-hidden="true" id="backbtn"></span></div>
+
+    </div>
+    <div id="movieinfoWin"    >
+        <!--<div class="row "><div class="text-center"><img src="img/load3.gif"><h3 class="text-center">读取中……</h3></div></div>-->
+
+
+    </div>
+    <div id="detailWin"  hidden="hidden">
+        <div class="row infostyle" >
+            <div class="col-xs-5 "><img src="" id="detailimg" class="center-block text-center img-responsive "></div>
+            <div class="col-xs-7 mtextinfo">
+                <p id="detailtitle" class="lead"></p>
+
+
+                <p >类型：<span id="mtype"></span>  &nbsp;&nbsp;<span id="countries"></span></p>
+                <p >导演：<span id="dao"></span></p>
+                <p >主演：<span id="dyan1"></span>&nbsp;<span id="dyan2"></span>&nbsp;<span id="yan3"></span></p>
+                <p >上映日期：<span id="detaildate"></span></p>
+            </div>
+        </div>
+        <div class="row infostyle">
+            <div class="col-xs-12">
+                <p class="lead text-center"><i id="stars"></i>   <i id="scores"></i>
+            </div>
+            <div class="col-xs-12 text-center"  >
+                <span class="glyphicon glyphicon-heart heart" aria-hidden="true"></span>  <span id="wishcount"></span>人想看</p>
+            </div>
+        </div>
+
+
+        <div class="row summary" >
+            <div class="col-xs-12">
+                <p class="lead"><b>简介：</b><span id="summary"></span></p>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="turnback" hidden="hidden" ><span id="backtext">返回</span></div>
+    <div id="more" hidden="hidden" ><span id="moretext">更多</span></div>
+
+</div>
+
+
+</body>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+    var movieinfo;
+    var load ='  <div class="row "><div class="text-center"><img src="img/load3.gif"><h3 class="text-center">读取中……</h3></div></div>';
+    var moviehWin;var commovieinfo ="";//保存页面
+    var navheight =$("#topnav").height();
+    var num="0";
+    var dscore=0;
+
+    $("#loadingpart").width($(window).width());
+    $("#loadingpart").height($(window).height());
+
+    $("#movieinfoWin"). css("margin-top",navheight);
+    $.ajax({
+
+        url:'http://op.juhe.cn/onebox/movie/pmovie?key=23b69b4b9828ff7b194402cc951c11bd&city=广州',
+        type: 'GET',
+        dataType: 'jsonp',
+        cache: false,
+
+        error: erryFunction,  //错误执行方法
+        success: succFunction //成功执行方法
+    });
+    function erryFunction() {
+        alert("ERROR");
+
+    }
+    function  succFunction(data) {
+        $("#loadingpart").hide();
+        $("#movieinfoWin").show();
+
+        movieinfo=data;
+        var infostr="";
+        for(var i=0;i<5;i++) {
+
+            var url =data.result.data[0].data[i].iconaddress;
+            var title = data.result.data[0].data[i].tvTitle;
+            var yan1 = data.result.data[0].data[i].star.data["1"].name;
+            var yan2 = data.result.data[0].data[i].star.data["2"].name;
+            var type1 = data.result.data[0].data[i].type.data["1"].name;
+            //  var type2 = data.result.data[0].data[i].type.data["2"].name;
+            var date =data.result.data[0].data[i].playDate.data2;
+            var score =data.result.data[0].data[i].grade;
+          //  var jian =movieinfo.result.data[0].data[i].story.data["storyBrief"];
+
+            infostr += '  <div class="row movieinfo" movienum="'+i+'"> <div class="col-xs-5"><img src="'+url+'" alt="ERROR" id="img_" class="center-block text-center img-responsive "></div><div class="col-xs-7 mtextinfo"> <p id="title" class="lead">'+title+'</p>' +
+                    ' <p >类型：<span id="type">'+type1+'</span></p> <p >主演：<span id="yan1">'+yan1+'</span>&nbsp;&nbsp;<span id="yan2">'+yan2+'</span></p> <p >上映日期：<span id="date">'+date+'</span></p> <p>评分：<span id="score" >'+score+'</span></p>    </div> </div>';
+
+        }
+
+        $("#movieinfoWin").html(infostr);
+        moviehWin=infostr
+        $(".movieinfo").on("click",function () {
+            $()
+            $("#loadingpart").show();
+            $("#movieinfoWin").hide();
+            $("#detailWin").hide();
+            num =$(this).attr("movienum");
+            var searchname = movieinfo.result.data[0].data[num].tvTitle;
+            $.ajax({
+
+                url:'https://api.douban.com/v2/movie/search?q='+searchname,
+                // url:'https://api.douban.com/v2/movie/subject/25777636',
+                type: 'GET',
+                dataType: 'jsonp',
+                cache: false,
+
+                error: getDetailError,  //错误执行方法
+                success: getDetailOK //成功执行方法
+            });
+
+
+
+
+
+
+
+        });
+    }
+
+    $("#turnback").on("click",function () {
+
+        $("#turnback").hide();
+        $("#more").off();
+        $("#more").hide();
+        $("#detailWin").hide();
+        $("#topnav").fadeIn();
+        $("#movieinfoWin").fadeIn();
+
+
+
+
+    });
+    $("#topbtn1").on("click",function () {
+        $("#topbtn2").removeClass("topactive");
+        $("#topbtn1").addClass("topactive");
+
+
+        $("#movieinfoWin").html(moviehWin);
+        $(".movieinfo").on("click",function () {
+            $("#loadingpart").show();
+            $("#movieinfoWin").hide();
+            $("#detailWin").hide();
+            num =$(this).attr("movienum");
+            var searchname = movieinfo.result.data[0].data[num].tvTitle;
+            $.ajax({
+
+                url:'https://api.douban.com/v2/movie/search?q='+searchname,
+                // url:'https://api.douban.com/v2/movie/subject/25777636',
+                type: 'GET',
+                dataType: 'jsonp',
+                cache: false,
+
+                error: getDetailError,  //错误执行方法
+                success: getDetailOK //成功执行方法
+            });
+
+
+        });
+
+    });
+
+    function getDetailOK(data) {
+        //聚合数据API
+        $("#topnav").hide();
+        $("#movieinfoWin").hide();
+        $("#turnback").fadeIn();
+        $("#more").fadeIn();
+        $("#detailWin").fadeIn();
+        var yan1 = movieinfo.result.data[0].data[num].star.data["1"].name;
+        var yan2 = movieinfo.result.data[0].data[num].star.data["2"].name;
+        $("#dyan1").html(yan1);
+        $("#dyan2").html(yan2);
+        $("#detailimg").prop("src",movieinfo.result.data[0].data[num].iconaddress);
+        $("#detailtitle").html(movieinfo.result.data[0].data[num].tvTitle);
+        $("#detaildate").html(movieinfo.result.data[0].data[0].playDate.data2);
+        $("#dao").html(movieinfo.result.data[0].data[num].director.data["1"].name);
+        dscore =movieinfo.result.data[0].data[num].grade;
+
+        //豆瓣API
+        var mid=data.subjects[0].id;
+        $.ajax({
+
+
+            url:'https://api.douban.com/v2/movie/subject/'+mid,
+            type: 'GET',
+            dataType: 'jsonp',
+            cache: false,
+
+            error: getDetailError,  //错误执行方法
+            success: getDoubanDetail //成功执行方法
+        });
+
+
+    }
+
+
+    $("#topbtn2").on("click",function () {
+        $("#topbtn1").removeClass("topactive");
+        $("#topbtn2").addClass("topactive");
+        $("#movieinfoWin").html(load);
+        $(".movieinfo").off();
+        var infostr="";
+        for(var i=0;i<5;i++) {
+
+            var url =movieinfo.result.data[1].data[i].iconaddress;
+            var title = movieinfo.result.data[1].data[i].tvTitle;
+            var yan1 = movieinfo.result.data[1].data[i].star.data["1"].name;
+            var yan2 = movieinfo.result.data[1].data[i].star.data["2"].name;
+            var type1 = movieinfo.result.data[1].data[i].type.data["1"].name;
+            //  var type2 = data.result.data[0].data[i].type.data["2"].name;
+            var date =movieinfo.result.data[1].data[i].playDate.data2;
+
+            //  var jian =movieinfo.result.data[0].data[i].story.data["storyBrief"];
+
+            infostr += '  <div class="row movieinfo" movienum="'+i+'"> <div class="col-xs-5"><img src="'+url+'" alt="ERROR" id="img_" class="center-block text-center img-responsive "></div><div class="col-xs-7 mtextinfo"> <p id="title" class="lead">'+title+'</p>' +
+                    ' <p >类型：<span id="type">'+type1+'</span></p> <p >主演：<span id="yan1">'+yan1+'</span>&nbsp;&nbsp;<span id="yan2">'+yan2+'</span></p> <p >上映日期：<span id="date">'+date+'</span></p>  </div> </div>';
+
+        }
+
+        $("#movieinfoWin").html(infostr);
+        $(".movieinfo").on("click",function () {
+            $("#loadingpart").show();
+            $("#movieinfoWin").hide();
+            $("#detailWin").hide();
+            num =$(this).attr("movienum");
+            var searchname = movieinfo.result.data[1].data[num].tvTitle;
+
+            $.ajax({
+
+                url:'https://api.douban.com/v2/movie/search?q='+searchname,
+                // url:'https://api.douban.com/v2/movie/subject/25777636',
+                type: 'GET',
+                dataType: 'jsonp',
+                cache: false,
+
+                error: getDetailError,  //错误执行方法
+                success: getComingDetail //成功执行方法
+            });
+
+
+        });
+
+
+    });
+
+    function getComingDetail(data) {
+        //聚合数据API
+        $("#topnav").hide();
+        $("#movieinfoWin").hide();
+        $("#turnback").fadeIn();
+        $("#more").fadeIn();
+        $("#detailWin").fadeIn();
+        var yan1 = movieinfo.result.data[1].data[num].star.data["1"].name;
+        var yan2 = movieinfo.result.data[1].data[num].star.data["2"].name;
+        $("#dyan1").html(yan1);
+        $("#dyan2").html(yan2);
+        $("#detailimg").prop("src",movieinfo.result.data[1].data[num].iconaddress);
+        $("#detailtitle").html(movieinfo.result.data[1].data[num].tvTitle);
+        $("#detaildate").html(movieinfo.result.data[1].data[0].playDate.data2);
+        $("#dao").html(movieinfo.result.data[1].data[num].director.data["1"].name);
+
+
+        //豆瓣API
+        var mid=data.subjects[0].id;
+        $.ajax({
+
+
+            url:'https://api.douban.com/v2/movie/subject/'+mid,
+            type: 'GET',
+            dataType: 'jsonp',
+            cache: false,
+
+            error: getDetailError,  //错误执行方法
+            success: getComingDoubanDetail //成功执行方法
+        });
+
+
+    }
+
+    function getComingDoubanDetail(data) {
+        $("#loadingpart").hide();
+
+        $("#detailWin").fadeIn();
+        $("#wishcount").html( data.wish_count);
+        $("#summary").html(data.summary);
+        $("#mtype").html(data.genres);
+        $("#stars").html("");
+        $("#scores").html("");
+        var doubanurl=data.mobile_url;
+        $("#more").on("click",function () {
+
+            window.open(doubanurl);
+
+        });
+    }
+
+
+    function getDetailError() {
+        alert("获取详细信息失败");
+
+    }
+    function getDoubanDetail(data) {
+
+        $("#loadingpart").hide();
+        $("#detailWin").fadeIn();
+        $("#wishcount").html( data.wish_count);
+        $("#summary").html(data.summary);
+        $("#mtype").html(data.genres);
+        var snum= (parseInt( data.rating["stars"])/10);
+        addStars(snum);
+        var doubanurl=data.mobile_url;
+        $("#more").on("click",function () {
+
+            window.open(doubanurl);
+
+        });
+    }
+    function addStars(starnum) {
+
+        var star ='<span class="glyphicon glyphicon-star stars" aria-hidden="true"></span>';
+
+        var addstar="";
+        for(var i=0;i<starnum;i++)
+        {
+            addstar+=star;
+
+        }
+        $("#stars").html("推荐指数："+addstar);
+        $("#scores").html(dscore+"/10");
+    }
+
+</script>
+</html>

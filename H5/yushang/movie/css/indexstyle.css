@@ -1,0 +1,103 @@
+
+body{
+    background-color: #3c3c3c;
+}
+.movieinfo{
+    background-color: #3c3c3c;
+    padding-top: 8px;
+
+    border-bottom:  1px solid #dcdcdc;
+    padding-bottom: 1%;
+}
+.mtextinfo{
+    /*padding-top: 3%;*/
+
+}
+*{
+    font-family: Microsoft YaHei ;
+    color: white;
+}
+
+#score{
+
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bolder;
+    font-size: 30px;
+    color: #fb6e00;
+}
+#title,#detailtitle{
+    font-weight: bolder;
+    color: #ed4052;
+}
+.topmenu{
+    background-color: #87d3dc;
+    font-size: 18px;
+
+}
+
+.topmenu{
+    padding-top: 3%;
+    padding-bottom: 3%;
+
+}
+.topactive{
+    background-color: #6ffffc;
+    color: #0054a4;
+    font-weight: bold;
+}
+.stars{
+    color: #ffe313;
+    margin-left: 3px;
+}
+.heart{
+    color: #ed323f;
+}
+
+.infostyle{
+    background-color: #3c3c3c;
+    padding-top: 8px;
+
+    border-bottom:  1px solid #dcdcdc;
+}
+.summary{
+    background-color: #3c3c3c;
+    padding-top: 8px;
+    padding-bottom: 20%;
+}
+#backbtn{
+    padding-left: 4%;
+    font-size: 23px;
+}
+#turnback{
+    width:50px; height:50px; background-color:#FFFFFF; border-radius:25px;
+
+    position: fixed;
+    left: 3%;
+    bottom: 3%;
+}
+#backtext{
+    height:50px; line-height:50px; display:block; color: #3c3c3c; text-align:center;
+    font-family: "Microsoft YaHei";
+    font-size: 16px;
+    font-weight: bold;
+}
+#more{
+    width:50px; height:50px; background-color:#FFFFFF; border-radius:25px;
+    position: fixed;
+    right: 3%;
+    bottom: 3%;
+
+}
+#moretext{
+    height:50px; line-height:50px; display:block; color: #3c3c3c; text-align:center;
+    font-family: "Microsoft YaHei";
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#loadingpart{
+    position: fixed;
+    z-index: 9999;
+    background-color: #3c3c3c;
+
+}
