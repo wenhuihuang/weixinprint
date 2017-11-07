@@ -15,22 +15,44 @@
 
 <body>
     <div class="ad-list">
-        <img src="./images/ad_1.png" alt="">
+        <div class="top-wrap">
+            <div class="top">
+                <img src="images/wait_ad_icon.png" />
+                <p>星巴克</p>
+            </div>
+            <div class="bottom">
+                <p class="h">来呀喂，</p>
+                <p class="h1">过来看广告咯~~</p>
+                <p class="h2">新鲜热的广告勒~~~</p>
+            </div>
+        </div>
     </div>
     <div class="print-wrapper">
         <div class="tips-text">
-            <p class="b"><strong>你的照片已经成功提交了哦</strong></p>
+            <p class="b">
+                <strong>你的照片已经成功提交了哦</strong>
+            </p>
             <p class="s">耐心等待片刻&nbsp;&nbsp;马上就好</p>
         </div>
         <div class="arrows"></div>
         <div>
-            <a href="" class="print-btn"></a>
+            <a href="" class="print-btn">点击继续打印</a>
         </div>
     </div>
     <div class="line"></div>
     <div class="issue">
         <a href="">打印有问题？点击这里反馈吧！</a>
     </div>
+    <script src="./photo/js/jquery-2.1.0.min.js"></script>
+    <script>
+        $(function(){
+            var top_wrap = $('.top-wrap');
+            var scale = 414/330;
+            var height = top_wrap.width()/scale;
+            var top_bottom = 182/305;
+            top_wrap.css({"height":height});
+        })
+    </script>
 </body>
 
 </html>

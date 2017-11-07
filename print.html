@@ -9,7 +9,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="./css/print.css?v=1">
+    <link rel="stylesheet" href="./css/print.css">
     <title>打印照片</title>
 </head>
 
@@ -36,8 +36,8 @@
                 <span class="min-yes-icon"></span>
             </div>
             <div class="type-item">
-                <div class="type-item-inner">
-                    <div class="item">
+                <div class="type-item-inner clearfix">
+                    <div class="item active">
                         <img src="photo/images/type_blank.png" alt="" class="frame-icon">
                         <span class="text">广告</span>
                     </div>
@@ -107,21 +107,24 @@
                 <span>提交</span>
             </a>
         </div>
-        <!-- <button id="upload2">选择图片</button>
-        <button id="clipBtn">上传图片</button> -->
 
         <input type="file" id="file" style="opacity: 0;position: fixed;bottom: -100px">
     </div>
     <img src="" title="upload.jpg" fileName="" id="hit" style="display:none;z-index: 9">
-    <canvas id="canvas1"></canvas>
+    <canvas id="canvas1" style="display:none;"></canvas>
     <script src="./photo/js/jquery-2.1.0.min.js"></script>
+    <script src="./js/layer_mobile/layer.js"></script>
     <script src="./photo/js/compressImg/lrz.bundle.js"></script>
     <script src="./photo/js/sonic.js"></script>
     <script src="./photo/js/comm.js"></script>
     <script src="./photo/js/hammer.js"></script>
     <script src="./photo/js/iscroll-zoom.js"></script>
-    <script src="./photo/js/jquery.photoClip.js?v=1"></script>
+    <script src="./photo/js/jquery.photoClip.js"></script>
     <script>
+        var photo_width = 414; //打印出来的相片宽度
+
+        var scale = 940 / 1200; //打印比例 -> 根据宽度可以计算出高度
+
         //判断是不是手机端
         var is_mobile = !!navigator.userAgent.match(/mobile/i);
 
@@ -130,29 +133,7 @@
         var body_width = $('body').width();
         var body_height = $('body').height();
 
-        $("#clipArea").photoClip({
-            width: body_width * 0.8125,
-            height: body_width * 0.8125,
-            file: "#file",
-            view: "#hit",
-            ok: "#clipBtn",
-            loadStart: function () {
-                //console.log("照片读取中");
-                $('.lazy_tip span').text('');
-                $('.lazy_cover,.lazy_tip').show();
-            },
-            loadComplete: function () {
-                //console.log("照片读取完成");
-                $('.lazy_cover,.lazy_tip').hide();
-            },
-            clipFinish: function (dataURL) {
-                $('#hit').attr('src', dataURL);
-                drawImageFrame(dataURL, 'get');
-                //saveImageInfo();
-            }
-        });
 
-        $('.ad-img').css('width', body_width * 0.8125)
 
         //图片上传
         function saveImageInfo() {
@@ -176,6 +157,35 @@
 
         //图片上传结束
         $(function () {
+            $('<i class="clear-img"></i>').appendTo($('#clipArea'));
+
+
+            $("#clipArea").photoClip({
+                width: body_width * 0.8125,
+                height: (body_width * 0.8125) / scale,
+                file: "#file",
+                view: "#hit",
+                ok: "#clipBtn",
+                clear: ".clear-img",
+                loadStart: function () {
+                    //console.log("照片读取中");
+                    $('.lazy_tip span').text('');
+                    $('.lazy_cover,.lazy_tip').show();
+                },
+                loadComplete: function (data) {
+                    //console.log("照片读取完成");
+                    console.log(data)
+                    $('.lazy_cover,.lazy_tip').hide();
+                },
+                clipFinish: function (dataURL) {
+                    $('#hit').attr('src', dataURL);
+                    drawImageFrame(dataURL);
+                    //saveImageInfo();
+                }
+            });
+
+            $('.ad-img').css('width', body_width * 0.8125)
+
             $('#upload2').on('touchstart', function () {
                 //图片上传按钮
                 $('#file').click();
@@ -188,16 +198,13 @@
 
     </script>
     <script>
-        var base64 = "";
-        function drawImageFrame(result, type, printCode) {
-            //$('#canvas1').show();
-            // $('#uploading').show();
+        function drawImageFrame(result) {
+            $('.lazy_cover,.lazy_tip').show();
             var canvas = document.getElementById('canvas1');
             var ctx = canvas.getContext("2d");
             var hit = $('#hit')//生成的图片
-            var canvasWidth = $('body').width() * 0.8125
-            var canvasHeight = $('body').height() * 0.8125
-            alert(canvasWidth + "=" + canvasHeight)
+            var canvasWidth = photo_width;//打印出来相片宽度
+            var canvasHeight = photo_width / scale; //打印出来相片高度
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
             var img = new Image();
@@ -207,64 +214,117 @@
             img.onload = function () {
                 ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);//相片
                 //相框
-                var frameBg = 'photo/frame/3.png' //$('.frame-bg').attr('url'); 
+                var frameBg = $('.frame-bg').attr('data-src'); //'photo/frame/3.png' //$('.frame-bg').attr('url'); 
                 if (frameBg != '' && frameBg != null && frameBg != undefined) {
                     var frame = new Image();
                     frame.width = canvasWidth;
                     frame.height = canvasHeight;
-                    console.log(frameBg)
                     frame.src = frameBg;//相框路径
                     frame.onload = function () {
-                        if (type == 'upload') {
-                            ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);//相片
-                            base64 = canvas.toDataURL();
-                            lrz(base64)
-                                .then(function (rst) {
-                                    // 处理成功会执行
-                                    base64 = rst.base64.split(",")[1];
-                                    $('#canvas1').hide();
-                                    //console.log(base64)
-                                    uploadImageToServer(base64, printCode);
-                                })
-                                .catch(function (err) {
-                                    // 处理失败会执行
-                                    alert("压缩图片失败,请重试,提示:" + err);
-                                    $('#uploading').hide();
-                                })
-                        } else if (type == 'get') {
-                            alert('get')
-                            ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);//相片
-                            $("#test").attr("src", canvas.toDataURL())
-                            //$('#getCroppedCanvasModal').modal().find('.modal-body').html(canvas);
-                            // $('#uploading').hide();
-                        }
+
+                        ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);//相片
+                        var base64 = canvas.toDataURL();
+                        printPhoto(base64);
+
                     }
                 } else {
-                    if (type == 'upload') {
-                        base64 = canvas.toDataURL();
-                        lrz(base64)
-                            .then(function (rst) {
-                                // 处理成功会执行
-                                base64 = rst.base64.split(",")[1];
-                                $('#canvas1').hide();
-                                //console.log(base64)
-                                uploadImageToServer(base64, printCode);
-                            })
-                            .catch(function (err) {
-                                // 处理失败会执行
-                                alert("压缩图片失败,请重试,提示:" + err);
-                                $('#uploading').hide();
-                            })
-                    } else if (type == 'get') {
-                        $("#test").attr("src", canvas.toDataURL())
-                    }
+                    var base64 = canvas.toDataURL();
+                    printPhoto(base64);
                 }
             }
         }
 
+        function printPhoto(base64) {
+            lrz(base64)
+                .then(function (rst) {
+                    $('.lazy_cover,.lazy_tip').hide();
+                    layer.open({
+                        title: [
+                            '是否打印？',
+                            'background-color:#F0607B; color:#fff;'
+                        ]
+                        , anim: 'scale'
+                        , content: '<img src="' + rst.base64 + '" style="display:block;width:100%;margin:auto;">'
+                        , btn: ['确认', '取消']
+                        ,
+                        yes: function () {
+                            // 处理成功会执行
+                            base64 = rst.base64.split(",")[1];
+                            //console.log(base64)
+
+                            //printCode 打印方式
+                            //0、没有足够金币
+                            //1、有足够打印次数
+                            //2、免费打印
+                            var printCode = 0;
+                            uploadImageToServer(base64, printCode);
+                        }
+                    });
+
+
+                })
+                .catch(function (err) {
+                    // 处理失败会执行
+                    $('.lazy_cover,.lazy_tip').hide();
+                    layer.open({
+                        content: '处理图片失败！请重试'
+                        , skin: 'msg'
+                        , time: 2 //2秒后自动关闭
+                    });
+                })
+        }
+
+        //printCode 打印方式
+        //0、没有足够金币
+        //1、有足够打印次数
+        //2、免费打印
+
+        function uploadImageToServer(database, printCode) {
+
+            $("#uploading").show();
+            var fd = new FormData();
+            fd.append('file', base64);//用作ajax请求的数据
+            $.ajax({
+                url: uploadUrl + "?phototext=" + $("#phototext").val() + "&" + Math.random(),
+                type: "POST",
+                data: fd,
+                processData: false,
+                contentType: false,
+                cache: false,
+                dataType: "json",
+                success: function (data) {
+                    $("#uploading").hide();
+                    if (data.code > 0) {
+
+                        if (printCode != 0 && printCode != 1 && printCode != 2) {
+                            showTips("未能正确判断打印方式，请重新点击下一步确认！");
+                            return;
+                        }
+
+                        if (printCode == 0) {
+                            showPayment();
+                        } else {
+                            location.href = "H5/ystz/complete.jsp";
+                        }
+
+                    } else {
+                        showTips(data.msg);
+                    }
+                },
+                error: function (msg) {
+                    $("#uploading").hide();
+                    showTips("上传照片失败，请重试！");
+                }, complete: function (XMLHttpRequest, textStatus) {
+                    //$("#uploading").hide();
+                }
+
+            })
+
+        }
+
         $(function () {
             var $clip_view = $('.photo-clip-view');
-            var $clear;
+
             /*自定义扩展图片裁剪*/
             //添加相框显示
             $('<dv class="frame-bg"></div>').css({
@@ -275,9 +335,16 @@
                 "bottom": "0",
                 "z-index": "1",
                 "pointer-events": "none",
-                "background": 'url("photo/frame/3.png") center center / 100% 100% no-repeat'
+                //"background": 'url("photo/frame/3.png") center center / 100% 100% no-repeat'
             }).appendTo($clip_view);
-            $clear = $('<i class="clear-img"></i>').appendTo($('#clipArea'));
+            
+            $('.clear-img').css({
+                "right": $clip_view.offset().left - 13
+            }).click(function () {
+                $('#file').val("");
+                $('.photo-clip-rotateLayer img').remove();
+                console.log($('#file').val())
+            })
             /*自定义扩展图片裁剪结束*/
 
             /*计算相片裁剪西区域大小*/
@@ -285,14 +352,7 @@
                 "min-height": $clip_view.height()
             })
 
-            $clear.css({
-                "right": $clip_view.offset().left - 13
-            }).click(function () {
-                console.log($('#file').val())
-                $('#file').val("");
-                $('.photo-clip-rotateLayer img').remove();
-                console.log($('#file').val())
-            })
+
             //点击添加图片事件
             if (is_mobile) {
                 $clip_view.on('touchstart', function () {
@@ -312,22 +372,27 @@
             //计算相框宽度
             var $frame_item = $('.item'),
                 $frame_item_size = $frame_item.length;
-            $frame_item_width = $frame_item.width(),
+                $frame_item_width = $frame_item.width(),
                 $frame_item_margin_right = parseInt($frame_item.css("margin-right"));
+
+            var bg_j = 0
+            for (var i = 0; i < $frame_item_size; i++) {
+                if (bg_j++ >= 5) {
+                    bg_j = 0;
+                }
+                $($frame_item[i]).addClass('item' + bg_j);
+
+            }
 
             $('.type-item-inner').css({ 'width': $frame_item_size * ($frame_item_width + $frame_item_margin_right) })
 
             //切换背景
-            $('.item').on('click',function(){
-                var src = $(this).find("img").data("src");
-                $('.frame-bg').css({"background":'url("'+src+'") center center / 100% 100% no-repeat'})
-                alert(src)
+            $('.item').on('click', function () {
+                $(this).addClass('active').siblings('.item').removeClass('active')
+                var src = $(this).find("img").attr("data-src");
+                $('.frame-bg').css({ "background": 'url("' + src + '") center center / 100% 100% no-repeat' }).attr("data-src", src ? src : "");
             })
 
-            //提交图片
-            $('#clipBtn').on('click',function(){
-
-            })
 
         })
     </script>

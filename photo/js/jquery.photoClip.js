@@ -35,6 +35,7 @@
             file: "",
             view: "",
             ok: "",
+            clear:"",
             strictSize: false,
             loadStart: function() {},
             loadComplete: function() {},
@@ -56,6 +57,7 @@
             file = option.file,
             view = option.view,
             ok = option.ok,
+            clear = option.clear,
             strictSize = option.strictSize,
             loadStart = option.loadStart,
             loadComplete = option.loadComplete,
@@ -146,6 +148,13 @@
                 clipImg();
             });
         }
+        var $clear = $(clear);
+        if ($clear.length) {
+            $clear.click(function() {
+                imgLoaded=false;
+            });
+        }
+        
     
         var $win = $(window);
         resize();
@@ -171,7 +180,7 @@
             });
     
     
-            loadComplete.call(this, this.src);
+            loadComplete.call(this, {src:this.src,width:imgWidth,height:imgHeight});
         }
     
         function initScroll() {
@@ -406,7 +415,11 @@
         }
         function clipImg() {
             if (!imgLoaded) {
-                alert("亲，当前没有图片可以裁剪!");
+                layer.open({
+                    content: '请上传图片！'
+                    , skin: 'msg'
+                    , time: 2 //2秒后自动关闭
+                });
                 $('.lazy_cover,.lazy_tip').hide();
                 return;
             }
@@ -432,7 +445,7 @@
             var dataURL = canvas.toDataURL("image/jpeg");
             $view.css("background-image", "url("+ dataURL +")");
             clipFinish.call($img[0], dataURL);
-            $('.lazy_cover,.lazy_tip').hide();
+            //$('.lazy_cover,.lazy_tip').hide();
         }
     
     

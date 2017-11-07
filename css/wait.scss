@@ -17,8 +17,15 @@ body{
     //width:1.77rem;
     width:pxtorem(315);
     height:pxtorem(66);
+    line-height:pxtorem(66);
     display: block;
     margin:auto;
+    font-size:.16rem;
+    text-align:center;
+    text-decoration: none;
+    color:#ec2c4e;
+    font-weight:bold;
+    letter-spacing:.04rem;
     background:url(../images/print_btn.png) no-repeat center center;
     background-size: 100%;
     margin-bottom:pxtorem(160);
@@ -68,4 +75,85 @@ body{
     font-size:.14rem;
     color:#fa5f80;
     text-decoration: none;
+}
+.top-wrap{
+    display:flex;
+    flex-direction: column;
+    margin-bottom:pxtorem(112);
+    background:url(../images/ad_bg.png) top center / 100% no-repeat;
+    .top{
+        display: flex;
+        height:37%;
+        flex-direction: column;
+        justify-content: flex-end;
+        img{
+            display:block;
+            width:pxtorem(100);
+            height:pxtorem(100);
+            margin:0 auto;
+            border-radius: 50%;
+            box-shadow: 0px 0px 2px 1px #ccc;
+        }
+        p{
+            text-align:center;
+            font-size:0.15rem;
+            font-weight:bold;
+            color:#666;
+            margin:.08rem 0;
+            
+        }
+    }
+    .bottom{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        height:61%;
+        padding-left:50%;
+        padding-right:6%;
+        p{
+            color:#666;
+            margin-bottom:.1rem;
+            // display: -webkit-box;
+            // -webkit-box-orient: vertical;
+            // -webkit-line-clamp: 1;
+            // overflow: hidden;
+        }
+        .h{
+            font-size:.22rem;
+        }
+        .h1{
+            font-size:.14rem;
+        }
+        .h2{
+            font-size:.14rem;
+        }
+    }
+    
+}
+/*iphone6*/
+@media screen and (max-width: 375px) {
+    .top-wrap .top img{
+        width:pxtorem(90);
+        height:pxtorem(90);
+    }
+}
+/*iphone5*/
+@media screen and (max-width: 320px) {
+    .top-wrap .top p{
+        margin:.06rem 0;
+        font-size:.13rem;
+    }
+    .top-wrap .top img{
+        width:pxtorem(85);
+        height:pxtorem(85);
+    }
+    .top-wrap .bottom .h{
+        font-size:.2rem;
+    }
+    .top-wrap .bottom .h1,.top-wrap .bottom .h2{
+        font-size:.13rem;
+    }
+    .top-wrap .bottom p{
+        margin-bottom:.08rem;
+    }
 }
