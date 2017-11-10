@@ -25,7 +25,7 @@ html, body {
 	width: 100%;
 	// height: 100%;
     z-index: 100;
-    padding-top:.25rem;
+    padding-top:pxtorem(52);
 }
 
 #clipArea {
@@ -40,6 +40,11 @@ html, body {
 	border-radius: 5px;
 	width: 40%;
 } */
+#clipBtn{
+    span{
+        font-size:pxtorem(28);
+    }
+}
 
 #upload2{
 	margin-top: 5px;
@@ -108,26 +113,27 @@ html, body {
 }
 .clear-img{
     display:inline-block;
-    width:.26rem;
-    height:.26rem;
+    width:pxtorem(60);
+    height:pxtorem(60);
     position: absolute;
-    top:-.13rem;
-    right:-.13rem;
+    top:pxtorem(-30);
+    right:pxtorem(-30);
     z-index: 2;
     background:url(../photo/images/del_icon.png) center center no-repeat;
 }
 .address-icon{
-    width:pxtorem(28);
-    height:pxtorem(41);
+    width:pxtorem(30);
+    height:pxtorem(42);
     display:inline-block;
     vertical-align: middle;
-    margin-right:.15rem;
+    margin-right:pxtorem(28);
     background:url(../photo/images/address_icon.png) center center no-repeat;
+    background-size:100% 100%;
 }
 .bottom{
     display:flex;
     height:pxtorem(65);
-    // position: fixed;
+    position: fixed;
     bottom:0;
     left:0;
     right:0;
@@ -136,12 +142,12 @@ html, body {
         flex: 2.0;
         display:flex;
         align-items: center;
-        padding-left:.25rem;
+        padding-left:pxtorem(48);
         span{
             @extend %inline-block;
             color:#f1607a;
             font-weight: bold;
-            font-size:.16rem;
+            font-size:12px;
         }
     }
     .right-btn{
@@ -151,7 +157,7 @@ html, body {
         justify-content: center;
         align-items: center;
         font-weight:bold;
-        font-size:.16rem;
+        font-size:12px;
         color:#fff;
         text-decoration: none;
         .min-yes-icon{
@@ -172,36 +178,36 @@ html, body {
 }
 
 .frame-type{
-    // position: fixed;
+     position: fixed;
     left:0;
     right:0;
     bottom:pxtorem(65);
-    margin-top:.25rem;
+    margin-top:pxtorem(23);
     .top-tips{
         background: rgba(248, 246, 246, 0.9);
-        border-top-left-radius: .1rem;
-        border-top-right-radius: .1rem;
-        margin-left:.2rem;
-        margin-right:.2rem;
-        padding:.1rem 0 0 0;
+        border-top-left-radius: pxtorem(25);
+        border-top-right-radius: pxtorem(25);
+        margin-left:pxtorem(27);
+        margin-right:pxtorem(27);
+        padding:pxtorem(8) 0 pxtorem(3) 0;
         text-align: center;
-        font-size:.14rem;
         span{
             color:#f1607a;
             @extend %inline-block;
+            font-size:12px;
         }
     }
     .type-item{
         display: block;
-        padding:.15rem .2rem;
+        padding:pxtorem(15) pxtorem(27);
         background:rgba(250, 249, 249, 0.9);
         overflow: auto;
         .item{
-            width:pxtorem(78);
-            height:pxtorem(100);
+            width:pxtorem(82);
+            height:pxtorem(110);
             position: relative;
             float:left;
-            margin-right:.08rem;
+            margin-right:pxtorem(30);
             &.active{
                 border:1px solid #f1607a;
                 transform: scale(1.1);
@@ -213,7 +219,7 @@ html, body {
             }
             .text{
                 text-align:center;
-                font-size:.12rem;
+                font-size:12px;
                 position:absolute;
                 display:flex;
                 justify-content: center;
@@ -270,7 +276,7 @@ html, body {
 
 /*适应小屏*/
 @media screen and (max-height: 450px) {
-	.show_labour .show_img {
+	/* .show_labour .show_img {
 		width: 75%;
 		margin-top: 22%;
 	}
@@ -288,20 +294,20 @@ html, body {
 	#clipBtn, #upload2 {
 		margin-top: 0px;
 		padding: 5px 20px;
-	}
+	} */
 
 }
 
 /*iphone6*/
 @media screen and (max-width: 375px) {
-    .frame-type .top-tips{
+    /* .frame-type .top-tips{
         font-size:.13rem;
-    }
+    } */
 }
 
 /*iphone5*/
 @media screen and (max-width: 320px) {
-    .frame-type .top-tips{
+    /* .frame-type .top-tips{
         font-size:.12rem;
         margin-left:.1rem;
         margin-right:.1rem;
@@ -309,6 +315,6 @@ html, body {
     .frame-type .type-item{
         padding-left:.1rem;
         padding-right:.1rem;
-    }
+    } */
 }
 

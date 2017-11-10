@@ -27,9 +27,10 @@
 <meta name="format-detection" content="" telephone="no">
 <META HTTP-EQUIV="pragma" CONTENT="no-cache"> 
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">  
-<link rel="stylesheet" href="H5/aloneqrcode/css/reset.css">
-<link rel="stylesheet" href="H5/aloneqrcode/css/wait.css">
+<link rel="stylesheet" href="H5/ystz/new/css/reset.css">
+<link rel="stylesheet" href="H5/ystz/new/css/wait.css">
 <script src="H5/ystz/assets/js/jquery.min.js"></script>
+<script src="H5/ystz/new/js/resetSize.js"></script>
 <title>打印反馈</title>
 <style>
 	#uploading,#tips{
@@ -235,14 +236,18 @@
 </head>
 <body>
     <div class="ad-list">
-        <img src="H5/aloneqrcode/images/ad_1.png" alt="">
+        <div class="top-wrap">
+            <div class="top">
+                <img src="<%=account==null?"":account.getAloneLogo() %>" alt="">
+                <p><%=account==null?"":account.getWeiXinName() %></p>
+            </div>
+            <div class="bottom">
+                <p class="h"><%=account==null?"":account.getaD_Print_Title() %></p>
+                <p class="h1"><%=account==null?"":account.getaD_Print_Content1() %></p>
+                <p class="h2"><%=account==null?"":account.getaD_Print_Content2() %></p>
+            </div>
+        </div>
     </div>
-    
-           名称：<%=account==null?"":account.getWeiXinName() %>
-            图标：<img src="<%=account==null?"":account.getAloneLogo() %>" alt="">
-            标题大字体：<%=account==null?"":account.getaD_Print_Title() %>
-            第一标题：<%=account==null?"":account.getaD_Print_Content1() %>
-            第二标题：<%=account==null?"":account.getaD_Print_Content2() %>
     
     <div class="print-wrapper">
         <div class="tips-text" style="width: 80%;">
@@ -266,6 +271,12 @@
 	function findstaff(){
 		alert("请联络工作人员进行处理。");
 	}
-	
+	  $(function(){
+          var top_wrap = $('.top-wrap');
+          var scale = 414/330;
+          var height = top_wrap.width()/scale;
+          var top_bottom = 182/305;
+          top_wrap.css({"height":height});
+      })
 </script>
 </html>

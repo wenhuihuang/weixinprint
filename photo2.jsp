@@ -1,16 +1,125 @@
+﻿<%@page import="com.wechatprinter.fg.utils.ServletUtils"%>
+<%@page import="com.wechatprinter.vo.WCPhoto"%>
+<%@page import="com.wechatprinter.fg.utils.ToolsUtils"%>
+<%@page import="java.io.File"%>
+<%@page import="com.pay.utils.MessageUtil"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	
+	
+	WCPhoto photo = (WCPhoto)request.getAttribute("photo");
+	System.out.println("photo == "+photo);
+	//
+	if(photo!=null&&!ToolsUtils.checkIsNull(photo.getPhotoFileName())){
+		String filePath = new ServletUtils().getLocalPath()+"oriImage/"+photo.getPhotoFileName();
+		//System.out.println(filePath);
+		File file = new File(filePath);
+		if(!file.exists()){
+			photo.setPhotoFileName("");
+			request.setAttribute("photo", photo);
+		}
+	}
+	
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
+	<base href="<%=basePath %>" />
+	<script type="text/javascript">
+		var aspectRatio = parseFloat('${printer.cutWidth }') /parseFloat('${printer.cutHeight }');
+		var cutWidth = parseFloat('${printer.cutWidth }');
+		var cutHeight = parseFloat('${printer.cutHeight }');
+		var uploadUrl = '<%=basePath %>wechatprinter/imageutil/testuploadNewImage2.do';
+		var checkIsPrintPhotoUrl = '<%=basePath %>wechatprinter/imageutil/testcheckIsPrintPhoto2.do';
+		var mainUrl =  '<%=MessageUtil.DEFAULT_IP %>'+"wechatprinter/oauth/oauth.do?func=redirect&areaid=${sessionScope.area.areaID}&processid=${sessionScope.processid}";
+		
+	</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name=renderer content=webkit>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="./css/print.css">
+    <link rel="stylesheet" href="H5/ystz/new/css/reset.css">
+    <link rel="stylesheet" href="H5/ystz/new/css/print.css">
     <title>打印照片</title>
+    <style type="text/css">
+    .payment-methods-wrap{
+  		position:fixed;
+  		z-index: 99999999;
+  		width:100%;
+  		top:0;
+  		bottom:0;
+  		left:0;
+  		right:0;
+  		background: rgba(66, 66, 66, 0.32);
+  		display:-webkit-box;
+  		-webkit-box-align:center;
+  	}
+  	.payment-methods-con{
+  		width:80%;
+  		margin:0 auto;
+  		background:#fff;
+  		border-radius:6px;
+  		padding-bottom:16px;
+  		padding-top:8px;
+  	}
+  	.close-btn{
+  		display:block;
+  		width:26px;
+  		height:26px;
+  		background:url(H5/ystz/img/a/close_icon.png) no-repeat center center;
+  		background-size:100% 100%;
+  		margin: 0 auto;
+  	}
+  	.title-top{
+  		display:-webkit-box;
+  		-webkit-box-align:center;
+  		height:43px;
+  	}
+  	.title-text{
+  		-webkit-box-flex:1.0;
+  		text-align:center;
+  		font-size:16px;
+  		font-weight:blod;
+  	}
+  	.close-wrap{
+  		width:48px;
+  		-webkit-box-align:center;
+  		-webkit-box-pack:center;
+  	}
+  	.methods-list p{
+  		width:80%;
+  		margin:8px auto;
+  		text-align:center;
+  		padding:15px 0;
+  		color:#fff;
+  		border-radius:4px;
+  		font-size:14px;
+  		font-weight: bold;
+  	}
+  	.methods-list p:nth-child(1){
+  		background:#FCD4D5;
+  	}
+  	.methods-list p:nth-child(2){
+  		background:#9AACDA;
+  	}
+  	.docs-tooltip{
+  		display:inline-block;
+  		padding:0;
+  	}
+  	.two-btn-wrap button{
+  		width: 42px;
+    	height: 36px;
+  	}
+    </style>
 </head>
 
 <body>
@@ -26,7 +135,15 @@
 
         <div id="clipArea"></div>
         <!-- 广告区域 -->
-        <img src="photo/images/ad/ad_1.jpg" alt="" class="ad-img">
+        <img src="H5/ystz/new/photo/images/ad/ad_1.jpg" alt="" class="ad-img">
+        <c:if test="${sessionScope.area.isCannotScanPhotoText}!=1"></c:if>
+        
+        <div class="" id="photoTextRow" style="display: none;">
+			<center>
+    			<textarea style="width: 70%;margin-top: 5%;height: 25px;" rows="1" cols="" placeholder="这里输入心情文字" id="phototext" name="phototext" ></textarea>
+    		</center>
+		</div>        
+        
         <!-- 广告区域结束 -->
         <div class="frame-type">
             <div class="top-tips">
@@ -34,63 +151,64 @@
                 <span class="min-add-icon"></span>
                 <span>上传照片，图片可以旋转缩放，调整后点击</span>
                 <span class="min-yes-icon"></span>
+                
             </div>
             <div class="type-item">
                 <div class="type-item-inner clearfix">
-                    <div class="item active">
-                        <img src="photo/images/type_blank.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item active">
+                        <img src="H5/ystz/new/photo/images/type_blank.png" alt="" class="frame-icon">
                         <span class="text">广告</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/images/type_blank.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(1)" class="item">
+                        <img  src="H5/ystz/new/photo/images/type_blank.png" alt="" class="frame-icon">
                         <span class="text">文字</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/1.png" data-src="photo/frame/1.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img  src="H5/ystz/new/photo/frame/min/1.png" data-src="H5/ystz/new/photo/frame//1.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/2.png" data-src="photo/frame/2.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/2.png" data-src="H5/ystz/new/photo/frame//2.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/3.png" data-src="photo/frame/3.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/3.png" data-src="H5/ystz/new/photo/frame//3.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/4.png" data-src="photo/frame/4.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/4.png" data-src="H5/ystz/new/photo/frame//4.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/5.png" data-src="photo/frame/5.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/5.png" data-src="H5/ystz/new/photo/frame//5.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/6.png" data-src="photo/frame/6.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/6.png" data-src="H5/ystz/new/photo/frame//6.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/7.png" data-src="photo/frame/7.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/7.png" data-src="H5/ystz/new/photo/frame//7.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/8.png" data-src="photo/frame/8.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/8.png" data-src="H5/ystz/new/photo/frame//8.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/9.png" data-src="photo/frame/9.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/9.png" data-src="H5/ystz/new/photo/frame//9.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/10.png" data-src="photo/frame/10.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/10.png" data-src="H5/ystz/new/photo/frame//10.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/11.png" data-src="photo/frame/11.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/11.png" data-src="H5/ystz/new/photo/frame//11.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
-                        <img src="photo/frame/min/12.png" data-src="photo/frame/12.png" alt="" class="frame-icon">
+                    <div onclick="showTxt(0)" class="item">
+                        <img src="H5/ystz/new/photo/frame/min/12.png" data-src="H5/ystz/new/H5/ystz/new/photo/frame//12.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
                 </div>
@@ -100,7 +218,7 @@
             <div class="left-info">
                 <span class="address-icon"></span>
                 <span>机台号：</span>
-                <span>323</span>
+                <span>${printer.printerNo }</span>
             </div>
             <a href="javascript:;" class="right-btn" id="clipBtn">
                 <span class="min-yes-icon"></span>
@@ -109,18 +227,43 @@
         </div>
 
         <input type="file" id="file" style="opacity: 0;position: fixed;bottom: -100px">
+        
+        
+        <div class="payment-methods-wrap"  style="display: none;">
+			<div class="payment-methods-con">
+				<div class="title-top">
+					<div class="title-text">选择支付方式</div>
+					<div class="close-wrap"><i class="close-btn" onclick="hidePayment()"></i></div>
+				</div>
+				<div class="methods-list">
+					<p onclick="location.href='wechatprinter/imageutil/showWeixinPay.do'">微信支付</p>
+					<p onclick="location.href='H5/${sessionScope.area.templateCoinUrl}'">密码支付</p>
+				</div>
+			</div>
+		</div>
     </div>
     <img src="" title="upload.jpg" fileName="" id="hit" style="display:none;z-index: 9">
     <canvas id="canvas1" style="display:none;"></canvas>
-    <script src="./photo/js/jquery-2.1.0.min.js"></script>
-    <script src="./js/resetSize.js"></script>
-    <script src="./js/layer_mobile/layer.js"></script>
-    <script src="./photo/js/compressImg/lrz.bundle.js"></script>
-    <script src="./photo/js/sonic.js"></script>
-    <script src="./photo/js/comm.js"></script>
-    <script src="./photo/js/hammer.js"></script>
-    <script src="./photo/js/iscroll-zoom.js"></script>
-    <script src="./photo/js/jquery.photoClip.js"></script>
+    <script src="H5/ystz/new/photo/js/jquery-2.1.0.min.js"></script>
+    <script src="H5/ystz/new/js/resetSize.js"></script>
+    <script src="H5/ystz/new/js/layer_mobile/layer.js"></script>
+    <script src="H5/ystz/new/photo/js/compressImg/lrz.bundle.js"></script>
+    <script src="H5/ystz/new/photo/js/sonic.js"></script>
+    <script src="H5/ystz/new/photo/js/comm.js"></script>
+    <script src="H5/ystz/new/photo/js/hammer.js"></script>
+    <script src="H5/ystz/new/photo/js/iscroll-zoom.js"></script>
+    <script src="H5/ystz/new/photo/js/jquery.photoClip.js"></script>
+    <script type="text/javascript">
+    	function showTxt(type){
+    		$("#phototext").val("");
+    		if(type==1){
+    			$("#photoTextRow").show();	
+    		}else{
+    			$("#photoTextRow").hide();
+    		}
+    		
+    	}
+    </script>
     <script>
         var photo_width = 414; //打印出来的相片宽度
 
@@ -156,6 +299,21 @@
             return d;
         }
 
+        function showLoading(){
+        	 $('.lazy_tip span').text("");
+             $('.lazy_cover,.lazy_tip').show();
+        }
+        
+        function hideTips(){
+        	$('.lazy_cover,.lazy_tip').hide();
+       }
+        function showTips(msg){
+        	layer.open({
+                content: msg
+                , skin: 'msg'
+                , time: 2 //2秒后自动关闭
+            });
+        }
         //图片上传结束
         $(function () {
             $('<i class="clear-img"></i>').appendTo($('#clipArea'));
@@ -180,7 +338,37 @@
                 },
                 clipFinish: function (dataURL) {
                     $('#hit').attr('src', dataURL);
-                    drawImageFrame(dataURL);
+                    
+                    showLoading("");
+                    $.ajax({
+                  		type:"POST",
+                  		url:checkIsPrintPhotoUrl,
+                  		dataType:"json",
+                  		async:false,
+                  		success:function(data){
+                  			hideTips();
+                  			if(data.code<0){
+                  				
+                  				console.log("data.msg == "+data.msg);
+                  				showTips(data.msg);
+                  			}else{
+                  				var printCode = data.code;
+                  				//0、没有足够金币
+                  				//1、有足够打印次数
+                  				//2、免费打印
+                  				//drawImageFrame(imgResult,'upload',printCode);
+                  				drawImageFrame(dataURL,printCode);
+                  			}
+                  			
+                  		},error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  			$("#uploading").hide();
+                  			showTips('请求网络出错，请重试，错误码：'+textStatus+'！')
+                  		}, complete: function(XMLHttpRequest, textStatus) {
+                  			//$("#uploading").hide();
+                  		}
+                  	})
+                    
+                    
                     //saveImageInfo();
                 }
             });
@@ -199,7 +387,7 @@
 
     </script>
     <script>
-        function drawImageFrame(result) {
+        function drawImageFrame(result,printCode) {
             $('.lazy_cover,.lazy_tip').show();
             var canvas = document.getElementById('canvas1');
             var ctx = canvas.getContext("2d");
@@ -225,17 +413,18 @@
 
                         ctx.drawImage(frame, 0, 0, canvasWidth, canvasHeight);//相片
                         var base64 = canvas.toDataURL();
-                        printPhoto(base64);
+                        printPhoto(base64,printCode);
 
                     }
                 } else {
                     var base64 = canvas.toDataURL();
-                    printPhoto(base64);
+                    printPhoto(base64,printCode);
                 }
             }
         }
 
-        function printPhoto(base64) {
+        function printPhoto(base64,printCode) {
+        	showLoading("");
             lrz(base64)
                 .then(function (rst) {
                     $('.lazy_cover,.lazy_tip').hide();
@@ -257,14 +446,13 @@
                             //0、没有足够金币
                             //1、有足够打印次数
                             //2、免费打印
-                            var printCode = 0;
+                            //var printCode = 0;
                             uploadImageToServer(base64, printCode);
                         }
                     });
 
 
-                })
-                .catch(function (err) {
+                }).catch(function (err) {
                     // 处理失败会执行
                     $('.lazy_cover,.lazy_tip').hide();
                     layer.open({
@@ -282,9 +470,9 @@
 
         function uploadImageToServer(database, printCode) {
 
-            $("#uploading").show();
+        	showLoading("");
             var fd = new FormData();
-            fd.append('file', base64);//用作ajax请求的数据
+            fd.append('file', database);//用作ajax请求的数据
             $.ajax({
                 url: uploadUrl + "?phototext=" + $("#phototext").val() + "&" + Math.random(),
                 type: "POST",
@@ -294,7 +482,7 @@
                 cache: false,
                 dataType: "json",
                 success: function (data) {
-                    $("#uploading").hide();
+                	hideTips();
                     if (data.code > 0) {
 
                         if (printCode != 0 && printCode != 1 && printCode != 2) {
@@ -305,7 +493,7 @@
                         if (printCode == 0) {
                             showPayment();
                         } else {
-                            location.href = "H5/ystz/complete.jsp";
+                            location.href = "H5/ystz/complete2.jsp";
                         }
 
                     } else {
@@ -313,7 +501,7 @@
                     }
                 },
                 error: function (msg) {
-                    $("#uploading").hide();
+                	hideTips();
                     showTips("上传照片失败，请重试！");
                 }, complete: function (XMLHttpRequest, textStatus) {
                     //$("#uploading").hide();
@@ -396,6 +584,13 @@
 
 
         })
+        
+        function showPayment(){
+			$('.payment-methods-wrap').show();
+		}
+		function hidePayment(){
+			$('.payment-methods-wrap').hide();
+		}
     </script>
     <div id="cover"></div>
 </body>

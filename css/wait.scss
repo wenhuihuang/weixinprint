@@ -1,11 +1,15 @@
 @import 'common';
+html,body{
+    height:100%;
+    overflow: hidden;
+}
 body{
     background: url(../images/print_bg.png) top center fixed;
     background-size: 100%;
     min-height: 100%;
 }
 .ad-list{
-    padding: .2rem .22rem 0 .22rem;
+    // padding: .2rem .22rem 0 .22rem;
 }
 .ad-list img{
     display: block;
@@ -20,11 +24,10 @@ body{
     line-height:pxtorem(66);
     display: block;
     margin:auto;
-    font-size:.16rem;
+    font-size:pxtorem(30);
     text-align:center;
     text-decoration: none;
     color:#ec2c4e;
-    font-weight:bold;
     letter-spacing:.04rem;
     background:url(../images/print_btn.png) no-repeat center center;
     background-size: 100%;
@@ -48,13 +51,16 @@ body{
     background-size: 100%;
     margin-bottom:pxtorem(50);
     .b{
-        font-size:.16rem;
         color:#3d3d3d;
         text-align:center;
-        margin-bottom:.1rem;
+        margin-bottom:pxtorem(18);
+        strong{
+            font-size:pxtorem(28);
+            font-weight:normal;
+        }
     }
     .s{
-        font-size: .14rem;
+        font-size: pxtorem(24);
         color:#6d6d6d;
         text-align:center;
     }
@@ -72,34 +78,38 @@ body{
     margin-bottom: pxtorem(50)
 }
 .issue a{
-    font-size:.14rem;
+    font-size:pxtorem(24);
     color:#fa5f80;
     text-decoration: none;
 }
 .top-wrap{
     display:flex;
     flex-direction: column;
+    margin:auto;
+    margin-top:pxtorem(30);
     margin-bottom:pxtorem(112);
+    width:pxtorem(620);
+    height:pxtorem(495);
     background:url(../images/ad_bg.png) top center / 100% no-repeat;
     .top{
         display: flex;
-        height:37%;
         flex-direction: column;
         justify-content: flex-end;
         img{
             display:block;
-            width:pxtorem(100);
-            height:pxtorem(100);
+            width:pxtorem(104);
+            height:pxtorem(104);
             margin:0 auto;
+            margin-top:pxtorem(28);
             border-radius: 50%;
             box-shadow: 0px 0px 2px 1px #ccc;
         }
         p{
             text-align:center;
-            font-size:0.15rem;
+            font-size:pxtorem(28);
             font-weight:bold;
             color:#666;
-            margin:.08rem 0;
+            margin-top:pxtorem(12);
             
         }
     }
@@ -107,53 +117,34 @@ body{
         display:flex;
         flex-direction: column;
         justify-content: center;
-        height:61%;
+        margin-top:pxtorem(91);
         padding-left:50%;
         padding-right:6%;
         p{
             color:#666;
-            margin-bottom:.1rem;
+            margin-bottom:pxtorem(20);
             // display: -webkit-box;
             // -webkit-box-orient: vertical;
             // -webkit-line-clamp: 1;
             // overflow: hidden;
         }
         .h{
-            font-size:.22rem;
+            font-size:pxtorem(42);
         }
         .h1{
-            font-size:.14rem;
+            font-size:pxtorem(21);
         }
         .h2{
-            font-size:.14rem;
+            font-size:pxtorem(21);
         }
     }
     
 }
 /*iphone6*/
 @media screen and (max-width: 375px) {
-    .top-wrap .top img{
-        width:pxtorem(90);
-        height:pxtorem(90);
-    }
+    
 }
 /*iphone5*/
 @media screen and (max-width: 320px) {
-    .top-wrap .top p{
-        margin:.06rem 0;
-        font-size:.13rem;
-    }
-    .top-wrap .top img{
-        width:pxtorem(85);
-        height:pxtorem(85);
-    }
-    .top-wrap .bottom .h{
-        font-size:.2rem;
-    }
-    .top-wrap .bottom .h1,.top-wrap .bottom .h2{
-        font-size:.13rem;
-    }
-    .top-wrap .bottom p{
-        margin-bottom:.08rem;
-    }
+    
 }

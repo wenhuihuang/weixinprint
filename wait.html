@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name=renderer content=webkit>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -44,15 +44,7 @@
         <a href="">打印有问题？点击这里反馈吧！</a>
     </div>
     <script src="./photo/js/jquery-2.1.0.min.js"></script>
-    <script>
-        $(function(){
-            var top_wrap = $('.top-wrap');
-            var scale = 414/330;
-            var height = top_wrap.width()/scale;
-            var top_bottom = 182/305;
-            top_wrap.css({"height":height});
-        })
-    </script>
+    <script src="./js/resetSize.js"></script>
 </body>
 
 </html>
