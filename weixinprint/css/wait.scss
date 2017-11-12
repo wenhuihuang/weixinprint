@@ -1,0 +1,150 @@
+@import 'common';
+html,body{
+    height:100%;
+    overflow: hidden;
+}
+body{
+    background: url(../images/print_bg.png) top center fixed;
+    background-size: 100%;
+    min-height: 100%;
+}
+.ad-list{
+    // padding: .2rem .22rem 0 .22rem;
+}
+.ad-list img{
+    display: block;
+    margin:auto;
+    width:100%;
+    margin-bottom:pxtorem(114);
+}
+.print-btn{
+    //width:1.77rem;
+    width:pxtorem(315);
+    height:pxtorem(66);
+    line-height:pxtorem(66);
+    display: block;
+    margin:auto;
+    font-size:pxtorem(30);
+    text-align:center;
+    text-decoration: none;
+    color:#ec2c4e;
+    letter-spacing:.04rem;
+    background:url(../images/print_btn.png) no-repeat center center;
+    background-size: 100%;
+    margin-bottom:pxtorem(160);
+    box-shadow: 0px 4px 12px 1px #d4c5c9;
+    border-radius: .3rem;
+}
+.arrows{
+    width:pxtorem(61);
+    height:pxtorem(44);
+    margin:auto;
+    background: url(../images/arrows_down_icon.png) no-repeat center center;
+    background-size:100%;
+    margin-bottom:pxtorem(22);
+}
+.tips-text{
+    width:pxtorem(358);
+    height:pxtorem(71);
+    margin: auto;
+    // background: url(../images/print_tips_text.png) no-repeat center center;
+    background-size: 100%;
+    margin-bottom:pxtorem(50);
+    .b{
+        color:#3d3d3d;
+        text-align:center;
+        margin-bottom:pxtorem(18);
+        strong{
+            font-size:pxtorem(28);
+            font-weight:normal;
+        }
+    }
+    .s{
+        font-size: pxtorem(24);
+        color:#6d6d6d;
+        text-align:center;
+    }
+}
+.line{
+    width:pxtorem(454);
+    height:pxtorem(3);
+    margin:auto;
+    background:url(../images/line_bg.png) no-repeat center center;
+    background-size: 100%;
+    margin-bottom:pxtorem(30)
+}
+.issue{
+    text-align:center;
+    margin-bottom: pxtorem(50)
+}
+.issue a{
+    font-size:pxtorem(24);
+    color:#fa5f80;
+    text-decoration: none;
+}
+.top-wrap{
+    display:flex;
+    flex-direction: column;
+    margin:auto;
+    margin-top:pxtorem(30);
+    margin-bottom:pxtorem(112);
+    width:pxtorem(620);
+    height:pxtorem(495);
+    background:url(../images/ad_bg.png) top center / 100% no-repeat;
+    .top{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        img{
+            display:block;
+            width:pxtorem(104);
+            height:pxtorem(104);
+            margin:0 auto;
+            margin-top:pxtorem(28);
+            border-radius: 50%;
+            box-shadow: 0px 0px 2px 1px #ccc;
+        }
+        p{
+            text-align:center;
+            font-size:pxtorem(28);
+            font-weight:bold;
+            color:#666;
+            margin-top:pxtorem(12);
+            
+        }
+    }
+    .bottom{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top:pxtorem(91);
+        padding-left:50%;
+        padding-right:6%;
+        p{
+            color:#666;
+            margin-bottom:pxtorem(20);
+            // display: -webkit-box;
+            // -webkit-box-orient: vertical;
+            // -webkit-line-clamp: 1;
+            // overflow: hidden;
+        }
+        .h{
+            font-size:pxtorem(42);
+        }
+        .h1{
+            font-size:pxtorem(21);
+        }
+        .h2{
+            font-size:pxtorem(21);
+        }
+    }
+    
+}
+/*iphone6*/
+@media screen and (max-width: 375px) {
+    
+}
+/*iphone5*/
+@media screen and (max-width: 320px) {
+    
+}
