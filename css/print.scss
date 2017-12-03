@@ -25,7 +25,7 @@ html, body {
 	width: 100%;
 	// height: 100%;
     z-index: 100;
-    padding-top:pxtorem(52);
+    padding-top:pxtorem(20);
 }
 
 #clipArea {
@@ -109,15 +109,15 @@ html, body {
     margin:auto;
 }
 .photo-clip-view{
-    background:url(../photo/images/default_img_a.png) center center / cover no-repeat;
+    background:url(../photo/images/default_img.png) center center / cover no-repeat;
 }
 .clear-img{
     display:inline-block;
     width:pxtorem(60);
     height:pxtorem(60);
     position: absolute;
-    top:pxtorem(-30);
-    right:pxtorem(-30);
+    top:pxtorem(-14);
+    right:pxtorem(-14);
     z-index: 2;
     background:url(../photo/images/del_icon.png) center center no-repeat;
 }
@@ -204,9 +204,10 @@ html, body {
         padding:pxtorem(15) pxtorem(27);
         background:rgba(250, 249, 249, 0.9);
         overflow: auto;
+        -webkit-overflow-scrolling: touch;
         .item{
             width:pxtorem(82);
-            height:pxtorem(110);
+            height:pxtorem(100);
             position: relative;
             float:left;
             margin-right:pxtorem(30);
@@ -283,8 +284,25 @@ html, body {
         border: 1px solid #ccc;
     }
 }
-
-
+#phototext{
+    border-radius: 0;
+    display:block;
+}
+.photo-file{
+    opacity: 0;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    &.active{
+        z-index: -1000;
+    }
+}
 
 /*适应小屏*/
 @media screen and (max-height: 450px) {

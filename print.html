@@ -24,7 +24,9 @@
 
     <div class="pic_edit">
 
-        <div id="clipArea"></div>
+        <div id="clipArea">
+            <input type="file" class="photo-file" id="file">
+        </div>
         <!-- 广告区域 -->
         <img src="photo/images/ad/ad_1.jpg" alt="" class="ad-img">
         <div class="" id="photoTextRow" style="display: none;">
@@ -42,39 +44,39 @@
             </div>
             <div class="type-item">
                 <div class="type-item-inner clearfix">
-                    <div class="item active">
+                    <div onclick="showTxt(0)" class="item active">
                         <img src="photo/images/type_blank.png" alt="" class="frame-icon">
                         <span class="text">广告</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(1)" class="item">
                         <img src="photo/images/type_blank.png" alt="" class="frame-icon">
                         <span class="text">文字</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/1.png" data-src="photo/frame/1.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/2.png" data-src="photo/frame/2.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/3.png" data-src="photo/frame/3.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/4.png" data-src="photo/frame/4.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/5.png" data-src="photo/frame/5.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/6.png" data-src="photo/frame/6.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/7.png" data-src="photo/frame/7.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
@@ -82,19 +84,19 @@
                         <img src="photo/frame/min/8.png" data-src="photo/frame/8.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/9.png" data-src="photo/frame/9.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/10.png" data-src="photo/frame/10.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/11.png" data-src="photo/frame/11.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
-                    <div class="item">
+                    <div onclick="showTxt(0)" class="item">
                         <img src="photo/frame/min/12.png" data-src="photo/frame/12.png" alt="" class="frame-icon">
                         <span class="text">照片</span>
                     </div>
@@ -126,10 +128,23 @@
     <script src="./photo/js/hammer.js"></script>
     <script src="./photo/js/iscroll-zoom.js"></script>
     <script src="./photo/js/jquery.photoClip.js"></script>
+    <script type="text/javascript">
+    	function showTxt(type){
+    		$("#phototext").val("");
+    		if(type==1){
+                $('.ad-img').hide();
+    			$("#photoTextRow").show();	
+    		}else{
+                $("#photoTextRow").hide();
+                $('.ad-img').show();
+    		}
+    		
+    	}
+    </script>
     <script>
         var photo_width = 414; //打印出来的相片宽度
 
-        var scale = 593 / 673; //打印比例 -> 根据宽度可以计算出高度
+        var scale = 210 / 296; //打印比例 -> 根据宽度可以计算出高度
 
         //判断是不是手机端
         var is_mobile = !!navigator.userAgent.match(/mobile/i);
@@ -167,8 +182,8 @@
 
 
             $("#clipArea").photoClip({
-                width: body_width * 0.8236,
-                height: (body_width * 0.8236) / scale,
+                width: body_width * 0.72,
+                height: (body_width * 0.72) / scale,
                 file: "#file",
                 view: "#hit",
                 ok: "#clipBtn",
@@ -190,17 +205,10 @@
                 }
             });
 
-            $('.ad-img').css('width', body_width * 0.8236);
-            $('#photoTextRow').css('width', body_width * 0.8236);
+            $('.ad-img').css('width', body_width * 0.72);
+            $('#photoTextRow').css('width', body_width * 0.72);
 
-            $('#upload2').on('touchstart', function () {
-                //图片上传按钮
-                $('#file').click();
-            })
-            $('#upload2').on('click', function () {
-                //图片上传按钮
-                $('#file').click();
-            })
+          
         })
 
     </script>
@@ -346,11 +354,10 @@
             }).appendTo($clip_view);
             
             $('.clear-img').css({
-                "right": $clip_view.offset().left - 13
+                "right": $clip_view.offset().left - 13 + 5
             }).click(function () {
-                $('#file').val("");
+                $('#file').val("").removeClass('active');
                 $('.photo-clip-rotateLayer img').remove();
-                console.log($('#file').val())
             })
             /*自定义扩展图片裁剪结束*/
 
@@ -359,23 +366,12 @@
                 "min-height": $clip_view.height()
             })
 
+            
+            $('#file').on('change',function(){
+                $(this).addClass('active');
+            })
 
-            //点击添加图片事件
-            if (is_mobile) {
-                $clip_view.on('touchstart', function () {
-                    var file = $('#file');
-                    if (!$.trim(file.val())) {
-                        $('#file').click();
-                    }
-                })
-            } else {
-                $clip_view.on('click', function () {
-                    var file = $('#file');
-                    if (!$.trim(file.val())) {
-                        $('#file').click();
-                    }
-                })
-            }
+     
             //计算相框宽度
             var $frame_item = $('.item'),
                 $frame_item_size = $frame_item.length;

@@ -11,6 +11,7 @@
     <title>全民免费打印中心</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/free.css">
+    <link rel="stylesheet" href="css/QRCode.css">
 </head>
 
 <body>
@@ -46,6 +47,17 @@
         <span>长按识别关注公众号，记得输入"66"哦！</span>
     </div>
     <div class="ad-list-content">
+
+            <!-- <div class="qrcodeRight" >
+                    <center>
+                        <div id="qrCode2a" style="position: absolute;display:none; width: 50%">
+                            <div class="progress" style="width: 75%"><span id="progress2a" class="orange" style="width: 0%;"></span></div>
+                            <img style="width: 80%;" alt="" src="./images/qrcode2.jpg">
+                        </div>
+                        <img id="2a" style="width: 73%" alt="" src="H5/aloneqrcode/img/click.png"  name="distinguish" >					
+                    </center>
+                </div> -->
+
         <div class="list">
             <div class="left">
                 <div class="app-icon">
@@ -56,10 +68,12 @@
                 <p class="name">xx滤镜相机</p>
                 <p class="desc">一款能让你变得漂亮的APP</p>
             </div>
-            <div class="right">
-                <a href="javascript:;" class="fingerprint-btn">
-                    <img src="images/code_1.png" alt="">
-                </a>
+            <div class="right qrcodeRight">
+                <div id="qrCode1" class="progress-bar-wrap">
+                    <div class="progress" style="width: 75%"><span id="progress1" class="orange" style="width: 0%;"><!-- <span>30%</span> --></span></div>
+                    <img alt="" src="./images/qrcode2.jpg">
+                </div>
+                <img src="./images/fingerprint_icon.png" id='1' class="fingerprint-btn" name="distinguish" />
                 <p>长按识别</p>
             </div>
         </div>
@@ -74,9 +88,11 @@
                 <p class="desc">你的衣帽在这里，等你！</p>
             </div>
             <div class="right">
-                <a href="javascript:;" class="fingerprint-btn">
-                    <img src="images/code_1.png" alt="">
-                </a>
+                <div id="qrCode2" class="progress-bar-wrap">
+                    <div class="progress" style="width: 75%"><span id="progress2" class="orange" style="width: 0%;"><!-- <span>30%</span> --></span></div>
+                    <img alt="" src="./images/qrcode2.jpg">
+                </div>
+                <img src="./images/fingerprint_icon.png" id='2' class="fingerprint-btn" name="distinguish" />
                 <p>长按识别</p>
             </div>
         </div>
@@ -91,9 +107,11 @@
                 <p class="desc">装逼来这里~~有喝的！有吃的！</p>
             </div>
             <div class="right">
-                <a href="javascript:;" class="fingerprint-btn">
-                    <img src="images/code_1.png" alt="">
-                </a>
+                <div id="qrCode3" class="progress-bar-wrap">
+                    <div class="progress" style="width: 75%"><span id="progress3" class="orange" style="width: 0%;"><!-- <span>30%</span> --></span></div>
+                    <img alt="" src="./images/qrcode2.jpg">
+                </div>
+                <img src="./images/fingerprint_icon.png" id='3' class="fingerprint-btn" name="distinguish" />
                 <p>长按识别</p>
             </div>
         </div>
@@ -108,9 +126,11 @@
                 <p class="desc">一款能让你变得漂亮的APP</p>
             </div>
             <div class="right">
-                <a href="javascript:;" class="fingerprint-btn">
-                    <img src="images/code_1.png" alt="">
-                </a>
+                <div id="qrCode4" class="progress-bar-wrap">
+                    <div class="progress" style="width: 75%"><span id="progress4" class="orange" style="width: 0%;"><!-- <span>30%</span> --></span></div>
+                    <img alt="" src="./images/qrcode2.jpg">
+                </div>
+                <img src="./images/fingerprint_icon.png" id='4' class="fingerprint-btn" name="distinguish" />
                 <p>长按识别</p>
             </div>
         </div>
@@ -125,9 +145,11 @@
                 <p class="desc">你的衣帽在这里，等你！</p>
             </div>
             <div class="right">
-                <a href="javascript:;" class="fingerprint-btn">
-                    <img src="images/code_1.png" alt="">
-                </a>
+                <div id="qrCode5" class="progress-bar-wrap">
+                    <div class="progress" style="width: 75%"><span id="progress5" class="orange" style="width: 0%;"><!-- <span>30%</span> --></span></div>
+                    <img alt="" src="./images/qrcode2.jpg">
+                </div>
+                <img src="./images/fingerprint_icon.png" id='5' class="fingerprint-btn" name="distinguish" />
                 <p>长按识别</p>
             </div>
         </div>
@@ -142,15 +164,18 @@
                 <p class="desc">装逼来这里~~有喝的！有吃的！</p>
             </div>
             <div class="right">
-                <a href="javascript:;" class="fingerprint-btn">
-                    <img src="images/code_1.png" alt="">
-                </a>
+                <div id="qrCode6" class="progress-bar-wrap">
+                    <div class="progress" style="width: 75%"><span id="progress6" class="orange" style="width: 0%;"><!-- <span>30%</span> --></span></div>
+                    <img alt="" src="./images/qrcode2.jpg">
+                </div>
+                <img src="./images/fingerprint_icon.png" id='6' class="fingerprint-btn" name="distinguish" />
                 <p>长按识别</p>
             </div>
         </div>
     </div>
     <script src="./photo/js/jquery-2.1.0.min.js"></script>
     <script src="./js/resetSize.js"></script>
+    <script src="./js/QRCode.js"></script>
 </body>
 
 </html>

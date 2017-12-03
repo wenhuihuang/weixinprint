@@ -23,181 +23,25 @@
 <meta name=renderer content=webkit>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
-<title>全民免费打印中心</title>
 <link rel="stylesheet" href="H5/ystz/new/css/reset.css"> 
-<link rel="stylesheet" href="H5/ystz/new/css/free.css">
+<link rel="stylesheet" href="H5/ystz/new/css/free.css?v=20171203">
 <script src="H5/ystz/assets/js/jquery.min.js"></script>
 <script src="H5/ystz/new/js/resetSize.js"></script>
+<link rel="stylesheet" href="H5/aloneqrcode/progress/css/style.css">
+<style type="text/css">
+.bottomDiv{
+		width: 100%;
+		height: auto;
+		bottom: 0;
+		position: fixed;
+		
+	}
+</style>
 <title>关注公众号</title>
-<script type="text/javascript">
-	$(function(){
-		
-		try{
-			$(window).scroll(function() {
-				  if($(window).scrollTop()==0){
-					  $(".bottomDiv").slideDown();
-				  }else{
-					  $(".bottomDiv").slideUp();
-				  }
-			});
-			
-			
-			changePic();
-			setTouchEvent();
-			setTouchEventByLogo();
-
-		}catch(err){
-			alert("抱歉未能正确加载网页，如不能识别二维码，请尝试重新进入网页！"+err.message);	
-		}
-		
-		
-	})
-	
-	function setTouchEvent(){
-		var objs = document.getElementsByName('distinguish');
-		if(objs!=null){
-			for(var i = 0;i<objs.length;i++){
-				var obj = objs[i];
-				
-				//和下面的方法一样，有些手机不能
-				/*obj.addEventListener('click', function(event) {
-					var childQRCode = document.getElementById("qrCode"+this.id);
-					childQRCode.style.display='block';
-					var progress1 = document.getElementById("progress"+this.id);
-					progress1.style.width = "0%";
-					isProgress = true;
-					setTimeout("goProgress('"+this.id+"')",0);
-					setTimeout("hideQRCode('"+this.id+"')",2100);
-				});*/
-				
-				obj.addEventListener('touchstart', function(event) {
-					var childQRCode = document.getElementById("qrCode"+this.id);
-					childQRCode.style.display='block';
-					var progress1 = document.getElementById("progress"+this.id);
-					progress1.style.width = "0%";
-					isProgress = true;
-					setTimeout("goProgress('"+this.id+"')",0);
-					setTimeout("hideQRCode('"+this.id+"')",2100);
-				}, false);
-				
-				obj.addEventListener('touchend', function(event) {
-					event.preventDefault();
-					var childQRCode = document.getElementById("qrCode"+this.id);
-					childQRCode.style.display='none';
-					var progress1 = document.getElementById("progress"+this.id);
-					progress1.style.width="0%";
-					isProgress = false;
-				}, false);
-				
-			}
-		}
-	}
-	
-	
-	function setTouchEventByLogo(){
-		var objs = document.getElementsByName('logos');
-		if(objs!=null){
-			for(var i = 0;i<objs.length;i++){
-				var obj = objs[i];
-				//和下面是一样,因为有部分手机不能触发下面事件
-				/*obj.addEventListener('click', function(event) {
-					var tempID = this.id.replace("logo","");
-					
-					var childQRCode = document.getElementById("qrCode"+tempID);
-					childQRCode.style.display='block';
-					var progress1 = document.getElementById("progress"+tempID);
-					progress1.style.width = "0%";
-					isProgress = true;
-					setTimeout("goProgress('"+tempID+"')",0);
-					setTimeout("hideQRCode('"+tempID+"')",2100);
-				});*/
-				
-				
-				obj.addEventListener('touchstart', function(event) {
-					var tempID = this.id.replace("logo","");
-					
-					var childQRCode = document.getElementById("qrCode"+tempID);
-					childQRCode.style.display='block';
-					var progress1 = document.getElementById("progress"+tempID);
-					progress1.style.width = "0%";
-					isProgress = true;
-					setTimeout("goProgress('"+tempID+"')",0);
-					setTimeout("hideQRCode('"+tempID+"')",2100);
-				}, false);
-				
-				obj.addEventListener('touchend', function(event) {
-					var tempID = this.id.replace("logo","");
-					
-					event.preventDefault();
-					var childQRCode = document.getElementById("qrCode"+tempID);
-					childQRCode.style.display='none';
-					var progress1 = document.getElementById("progress"+tempID);
-					progress1.style.width="0%";
-					isProgress = false;
-				}, false);
-				
-			}
-		}
-	}
-	
-	
-	
-	var isProgress = false;
-	function goProgress(id){
-		var progress1 = document.getElementById("progress"+id);
-		var pg = progress1.style.width;
-		if(isProgress==true){
-			pg = pg.replace("%","");
-			if((parseInt(pg)+10)==100){
-				isProgress = false;
-			}
-			progress1.style.width = (parseInt(pg)+10)+"%";
-			
-			if(isProgress==true){
-				setTimeout("goProgress('"+id+"')",70);				
-			}
-		}
-	}
-	
-	function hideQRCode(qrCodeID){
-		var childQRCode = document.getElementById("qrCode"+qrCodeID);
-		childQRCode.style.display='none';
-		
-		isProgress = false;
-		var progress1 = document.getElementById("progress"+qrCodeID);
-		progress1.style.width="0%";
-	}
-	
-	var changeIndex = 0;
-	
-	function changePic(){
-		if($(".bottomDiv img").length>0){
-			
-			var millisec = 1000;
-			millisec = $($(".bottomDiv img")[changeIndex]).attr("alt");
-			
-			for(var i = 0;i<$(".bottomDiv img").length;i++){
-				$($(".bottomDiv img")[i]).hide();
-			}
-			console.log($($(".bottomDiv img")[changeIndex]).attr("src"));
-			$($(".bottomDiv img")[changeIndex]).show();
-			
-			if(changeIndex == $(".bottomDiv img").length-1){
-				changeIndex = 0;
-			}else{
-				changeIndex++;
-			}
-			
-			setTimeout("changePic()",millisec);
-			
-		}
-		
-	}
-	
-</script>
 </head>
 <body>
  <div class="top-info">
+        <!-- <img class="bg" src="H5/ystz/new/images//free_top_bg.png"> -->
         <div class="top-tips">
             <strong class="label">操作步骤：</strong>
             <span class="text">长按识别公众号,记得输入"66"哦!带飞带放大发发给发给。</span>
@@ -206,7 +50,8 @@
             <div class="left-content">
                 <div class="user-info">
                     <div class="head" >
-                        <img src="${headimgurl }" alt="">
+                    	<!-- style="margin-left: -2px;margin-top: -2px;border-radius: 40px;width: 70px;" -->
+                        <img  src="${headimgurl }" alt="">
                     </div>
                     <div class="user-name">${nickname }</div>
                 </div>
@@ -237,7 +82,7 @@
         <strong>温馨提示：</strong>
         <span>长按识别关注公众号，记得输入"66"哦！</span>
     </div>
-    <div class="ad-list-content">
+    <div class="ad-list-content" style="margin-bottom: 50px">
     	<%
 		if(accounts!=null&&accounts.size()>0){
 			for(int i = 0;i<accounts.size();i++){
@@ -273,10 +118,12 @@
 			                <p class="desc"><%=ToolsUtils.checkIsNull(account.getaD_Home())?"":account.getaD_Home() %></p>
 			            </div>
 			            <div class="right">
-			                <a href="javascript:;" class="fingerprint-btn">
-			                    <img src="<%=accountQRCode %>" alt="">
-			                </a>
-			                <p>长按识别</p>
+							<div id="qrCode<%=account.getWeiXinAccountId() %>" class="progress-bar-wrap">
+								<div class="progress" style="width: 75%"><span id="progress<%=account.getWeiXinAccountId() %>" class="orange" style="width: 0%;"><!-- <span>30%</span> --></span></div>
+								<img alt="" src="<%=accountQRCode %>">
+							</div>
+							<img src="H5/ystz/new/images/fingerprint_icon.png" id='<%=account.getWeiXinAccountId() %>' class="fingerprint-btn" name="distinguish" />
+							<p>长按识别</p>
 			            </div>
 			        </div>				
 				<%
@@ -285,5 +132,13 @@
        	%>
     </div>
 
+	<div class="bottomDiv">
+		<c:if test="${h5ADs != null and fn:length(h5ADs)>0 }" >
+			<c:forEach items="${h5ADs }" var="h5AD">
+				<img style="width: 100%;height: auto;display: none;" alt="${h5AD.StayTime }" src="newImage/AD/wechatlink/${h5AD.ResourcesPath }" onclick="location.href='${h5AD.Url }'">
+			</c:forEach>
+		</c:if>		
+	</div>
+	<script src="H5/ystz/new/js/QRCode.js"></script>
 </body>
 </html>

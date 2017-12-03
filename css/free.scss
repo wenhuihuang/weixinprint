@@ -175,7 +175,9 @@
             align-items: flex-end;
             justify-content: center;
             flex-direction: column;
+            position: relative;
             .fingerprint-btn{
+                border:none;
                 display:block;
                 width:pxtorem(104);
                 height:pxtorem(104);
@@ -188,11 +190,11 @@
                     height:100%;
                     opacity:0;
                 }
-                &:hover,&:active{
-                    img{
-                        opacity: 1;
-                    }
-                }
+                // &:hover,&:active{
+                //     img{
+                //         opacity: 1;
+                //     }
+                // }
             }
             p{
                 width:pxtorem(104);
@@ -201,6 +203,18 @@
                 font-size:12px;
             }
         }
+    }
+}
+.progress-bar-wrap{
+    position: absolute;
+    top:-20px;
+    left:-20px;
+    right:-20px;
+    display:none;
+    img{
+        width:80%;
+        display:block;
+        margin:auto;
     }
 }
 /*iphone5*/

@@ -184,6 +184,7 @@
     
     
             loadComplete.call(this, {src:this.src,width:imgWidth,height:imgHeight});
+            refreshScroll()
         }
     
         function initScroll() {
